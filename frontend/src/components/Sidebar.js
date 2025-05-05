@@ -26,15 +26,7 @@ const Sidebar = ({ onChatbotToggle, isChatbotOpen }) => {
               Patients
             </Link>
           </li>
-          <li className="nav-item">
-            <button 
-              onClick={onChatbotToggle}
-              className={`nav-link ${isChatbotOpen ? 'active' : ''}`}
-            >
-              <FiMessageSquare className="nav-icon" />
-              {isChatbotOpen ? 'Close Chat' : 'AI Assistant'}
-            </button>
-          </li>
+          
           <li className="nav-item">
             <a href="#settings" className="nav-link">
               <FiSettings className="nav-icon" />
