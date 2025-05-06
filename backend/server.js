@@ -13,6 +13,8 @@ app.use('/uploads', express.static('uploads'));
 
 // Routes
 app.use('/api/patients', patientRoutes);
+app.use('/api/chat', require('./routes/chatRoutes'));
+app.use('/api/pdf', require('./routes/pdfRoutes'));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)

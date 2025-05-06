@@ -5,6 +5,7 @@ import PatientForm from './components/PatientForm';
 import PatientView from './components/PatientView';
 import UpdatePatient from './components/UpdatePatient';
 import Sidebar from './components/Sidebar';
+import Chat from './components/Chat';
 import './App.css';
 
 function App() {
@@ -16,6 +17,8 @@ function App() {
           <Routes>
             <Route path="/" element={<PatientList />} />
             <Route path="/add" element={<PatientForm />} />
+            <Route path="/chat" element={<Chat />} />
+            
             <Route path="/patient/:id" element={<PatientView />} />
             <Route path="/patient/:id/update" element={<UpdatePatient />} />
           </Routes>

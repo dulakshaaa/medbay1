@@ -26,6 +26,12 @@ const Sidebar = ({ onChatbotToggle, isChatbotOpen }) => {
               Patients
             </Link>
           </li>
+          <li className="nav-item">
+            <Link to="/chat" className="nav-link">
+              <FiUserPlus className="nav-icon" />
+              chatbot
+            </Link>
+          </li>
           
           <li className="nav-item">
             <a href="#settings" className="nav-link">

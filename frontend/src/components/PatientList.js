@@ -163,14 +163,7 @@ const PatientList = () => {
                           <FiFileText className="btn-icon" />
                           View
                         </Link>
-                        <button
-                          onClick={() => handleGenerateReport(patient._id, patient.name)}
-                          className="btn btn-primary"
-                          disabled={generatingReports[patient._id]}
-                        >
-                          <FiFilePlus className="btn-icon" />
-                          {generatingReports[patient._id] ? 'Generating...' : 'Report'}
-                        </button>
+                        
                       </div>
                     </td>
                   </tr>
