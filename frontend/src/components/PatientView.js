@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getPatientById, updatePatientStatus, deleteReport } from '../services/api';
-import { FiUser, FiEdit, FiArrowLeft, FiFileText, FiPower, FiTrash2 } from 'react-icons/fi';
+import { FiUser, FiEdit, FiArrowLeft, FiFileText, FiPower, FiTrash2, FiDownload } from 'react-icons/fi';
+import { jsPDF } from 'jspdf';
 
 function PatientView() {
   const { id } = useParams();
   const [patient, setPatient] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState(''); // New state for success/failure message
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     const fetchPatient = async () => {
@@ -38,13 +39,78 @@ function PatientView() {
 
     try {
       const response = await deleteReport(id, reportId);
-      setPatient(response.data); // Update patient with new reports array
+      setPatient(response.data);
       setMessage('Report deleted successfully');
-      setTimeout(() => setMessage(''), 2000); // Clear message after 2 seconds
+      setTimeout(() => setMessage(''), 2000);
     } catch (error) {
       console.error('Error deleting report:', error);
       setMessage('Failed to delete report');
-      setTimeout(() => setMessage(''), 2000); // Clear message after 2 seconds
+      setTimeout(() => setMessage(''), 2000);
+    }
+  };
+
+  const handleGeneratePDF = () => {
+    try {
+      const doc = new jsPDF();
+      let yPosition = 20;
+
+      // Add title
+      doc.setFontSize(18);
+      doc.text('Patient Medical Report', 20, yPosition);
+      yPosition += 10;
+
+      // Add patient details
+      doc.setFontSize(12);
+      doc.text(`Name: ${patient.name}`, 20, yPosition);
+      yPosition += 10;
+      doc.text(`Email: ${patient.email}`, 20, yPosition);
+      yPosition += 10;
+      doc.text(`Age: ${patient.age}`, 20, yPosition);
+      yPosition += 10;
+      doc.text(`Phone: ${patient.phone}`, 20, yPosition);
+      yPosition += 10;
+      doc.text(`Address: ${patient.address}`, 20, yPosition);
+      yPosition += 10;
+      doc.text(`Status: ${patient.active ? 'Active' : 'Deactivated'}`, 20, yPosition);
+      yPosition += 20;
+
+      // Add medical reports section
+      doc.setFontSize(14);
+      doc.text('Medical Reports', 20, yPosition);
+      yPosition += 10;
+
+      if (patient.reports && patient.reports.length > 0) {
+        doc.setFontSize(12);
+        patient.reports.forEach((report, index) => {
+          if (yPosition > 270) {
+            doc.addPage();
+            yPosition = 20;
+          }
+          doc.text(`Report ${index + 1}: ${report.description}`, 20, yPosition);
+          yPosition += 10;
+          doc.text(`Expires: ${new Date(report.expirationDate).toLocaleDateString()}`, 20, yPosition);
+          yPosition += 10;
+          doc.text(`Path: http://localhost:5000/${report.path}`, 20, yPosition);
+          yPosition += 10;
+        });
+      } else {
+        doc.setFontSize(12);
+        doc.text('No reports available', 20, yPosition);
+        yPosition += 10;
+      }
+
+      // Add footer with generation date
+      doc.setFontSize(10);
+      doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 20, 280);
+
+      // Download the PDF
+      doc.save(`patient_${id}_details.pdf`);
+      setMessage('PDF generated and downloaded successfully');
+      setTimeout(() => setMessage(''), 2000);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      setMessage('Failed to generate PDF');
+      setTimeout(() => setMessage(''), 2000);
     }
   };
 
@@ -158,6 +224,13 @@ function PatientView() {
         >
           <FiPower className="btn-icon" />
           {patient.active ? 'Deactivate' : 'Activate'}
+        </button>
+        <button 
+          onClick={handleGeneratePDF} 
+          className="btn btn-primary"
+        >
+          <FiDownload className="btn-icon" />
+          Generate PDF
         </button>
       </div>
     </div>

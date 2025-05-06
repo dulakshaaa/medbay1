@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_URL = 'http://localhost:5000/api/patients';
-const API_URL2 = 'http://localhost:5000/api'
+const API_URL2 = 'http://localhost:5000/api';
 
 export const createPatient = (patientData) => axios.post(API_URL, patientData);
 export const getAllPatients = () => axios.get(API_URL);
@@ -41,4 +41,11 @@ export const uploadPdf = (file) => {
       'Content-Type': 'multipart/form-data'
     }
   });
+};
+
+export const generatePDF = async (patientId) => {
+  const response = await axios.get(`${API_URL}/${patientId}/pdf`, {
+    responseType: 'blob' // Important for handling PDF binary data
+  });
+  return response.data;
 };
