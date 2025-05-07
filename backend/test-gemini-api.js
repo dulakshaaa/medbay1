@@ -1,7 +1,7 @@
 const axios = require('axios');
 
-const API_KEY = "AIzaSyBHuBs8xQsQkRYZYKPktD0IZinc1VeZqk8"; // Replace with your valid key
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${API_KEY}`;
+const API_KEY = "AIzaSyDbGubQNOwoiDE3qq5qnu3-hEwRKRNxE-Y"; // Replace with your valid key
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
 async function testApi() {
   try {

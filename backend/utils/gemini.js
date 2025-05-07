@@ -1,7 +1,7 @@
 // utils/gemini.js - Updated with proper error handling
 const axios = require('axios');
 
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
 const generateResponse = async (message, pdfText) => {
   try {
