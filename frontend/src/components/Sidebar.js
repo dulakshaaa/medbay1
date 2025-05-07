@@ -5,7 +5,7 @@ import { FiHome, FiUserPlus, FiUsers, FiSettings, FiMessageSquare } from 'react-
 const Sidebar = ({ onChatbotToggle, isChatbotOpen }) => {
   return (
     <aside className="sidebar">
-      <h2 className="text-center mb-8">Hospital MS</h2>
+      <h2 className="text-center mb-8">Medicare</h2>
       <nav>
         <ul className="nav-menu">
           <li className="nav-item">
